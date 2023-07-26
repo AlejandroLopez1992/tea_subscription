@@ -3,6 +3,5 @@ class Subscription < ApplicationRecord
   has_many :subscription_teas
   validates_presence_of :title
   validates_numericality_of :price, greater_than: 0
-  enum status: %w(active cancelled)
   enum frequency: %w(weekly monthly quarterly yearly)
 end
