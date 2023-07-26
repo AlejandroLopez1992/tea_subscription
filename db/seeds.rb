@@ -19,5 +19,38 @@ Tea.create!(title: "White Tea", description: "classic white hue tea", temperatur
 Tea.create!(title: "Earl Grey", description: "oil and bergamot flavored", temperature: 200, brew_time: 600)
 Tea.create!(title: "Herbal Tea", description: "herbal infustion and spices", temperature: 180, brew_time: 900)
 Tea.create!(title: "Hibiscus Tea", description: "crimson & magenta calyces", temperature: 135, brew_time: 550)
-Subscription.create!(title: "Silver", price: 700, frequency: 0)
-Subscription.create!(title: "Gold", price: 1200, frequency: 2)
+
+Subscription.create!(title: "Copper", price: 500, frequency: 3)
+Subscription.create!(title: "Silver", price: 1000, frequency: 2)
+Subscription.create!(title: "Gold", price: 1400, frequency: 1)
+Subscription.create!(title: "Platinum", price: 2500, frequency: 0)
+
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Copper").id, tea_id: Tea.find_by(title: "Green Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Copper").id, tea_id: Tea.find_by(title: "Black Tea").id)
+
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Silver").id, tea_id: Tea.find_by(title: "Green Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Silver").id, tea_id: Tea.find_by(title: "Black Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Silver").id, tea_id: Tea.find_by(title: "White Tea").id)
+
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Gold").id, tea_id: Tea.find_by(title: "Green Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Gold").id, tea_id: Tea.find_by(title: "Black Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Gold").id, tea_id: Tea.find_by(title: "White Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Gold").id, tea_id: Tea.find_by(title: "Earl Grey").id)
+
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Platinum").id, tea_id: Tea.find_by(title: "Green Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Platinum").id, tea_id: Tea.find_by(title: "Black Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Platinum").id, tea_id: Tea.find_by(title: "White Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Platinum").id, tea_id: Tea.find_by(title: "Earl Grey").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Platinum").id, tea_id: Tea.find_by(title: "Herbal Tea").id)
+SubscriptionTea.create!(subscription_id: Subscription.find_by(title: "Platinum").id, tea_id: Tea.find_by(title: "Hibiscus Tea").id)
+
+CustomerSubscription.create!(customer_id: Customer.find_by(email: "123@gmail.com").id, subscription_id: Subscription.find_by(title: "Copper").id)
+CustomerSubscription.create!(customer_id: Customer.find_by(email: "123@gmail.com").id, subscription_id: Subscription.find_by(title: "Gold").id)
+
+CustomerSubscription.create!(customer_id: Customer.find_by(email: "12@gmail.com").id, subscription_id: Subscription.find_by(title: "Platinum").id)
+
+
+
+
+
+
