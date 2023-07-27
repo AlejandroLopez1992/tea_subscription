@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
-  resources :subscriptions
-  resources :teas
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  namespace :api do
+    namespace :v1 do
+      resources :customer_subscriptions, only: [:create]
+    end
+  end
 end
