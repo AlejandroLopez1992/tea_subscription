@@ -25,7 +25,7 @@ RSpec.describe "CustomerSubscriptions API calls" do
       expect(formatted_responce[:message]).to eq("Succesfully created customer subscription")
 
       expect(customer.subscriptions).to include(subscription)
-      expect(subscription.customer).to include(customer)
+      expect(subscription.customers).to include(customer)
     end
   end
 end

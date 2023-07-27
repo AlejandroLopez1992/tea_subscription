@@ -3,7 +3,7 @@ class CustomerSubscriptionSerializer
 
   def created
     {
-      "Succesfully created customer subscription"
+      "message": "Succesfully created customer subscription"
     }
   end
 end
