@@ -1,4 +1,4 @@
-require 'rspec'
+require 'rails_helper'
 
 RSpec.describe "CustomerSubscriptions API calls" do
   describe "POST /api/v1/customer_subscriptions" do
