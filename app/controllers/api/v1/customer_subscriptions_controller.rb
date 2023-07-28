@@ -13,8 +13,11 @@ rescue_from NoMethodError, with: :not_found
   def update
     customer_id = find_customer_id(customer_subscription_params)
     subscription_id = find_subscription_id(customer_subscription_params)
-    customer_subscription = CustomerSubscription.new(customer_id: customer_id, subscription_id: subscription_id)
+    customer_subscription = CustomerSubscription.find_by(customer_id: customer_id, subscription_id: subscription_id)
     customer_subscription.cancel
+    if customer_subscription.save
+      render json: CustomerSubscriptionSerializer.new(customer_subscription).cancelled, status: 200
+    end
   end
 
   private

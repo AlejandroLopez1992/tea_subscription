@@ -98,9 +98,55 @@ RSpec.describe "CustomerSubscriptions API calls" do
 
       expect(formatted_responce).to be_a(Hash)
       expect(formatted_responce).to have_key(:message)
-      expect(formatted_responce[:message]).to eq("Succesfully canceled customer subscription")
+      expect(formatted_responce[:message]).to eq("Succesfully cancelled customer subscription")
 
       expect(customer.customer_subscriptions.first.status).to eq("cancelled")
+    end
+
+    it "if customer email passed does not pertain to a customer, error is sent" do
+      customer = create(:customer)
+      subscription = create(:subscription)
+
+      customer_subscription_params = {
+        "customer_email": "123@happyplace.com",
+        "subscription_title": subscription.title
+      }
+
+      headers = {"CONTENT_TYPE" => "application/json"}
+
+      patch "/api/v1/customer_subscriptions_cancel", headers: headers, params: JSON.generate(customer_subscription: customer_subscription_params)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+
+      formatted_responce = JSON.parse(response.body, symbolize_names: true)
+
+      expect(formatted_responce).to be_a(Hash)
+      expect(formatted_responce).to have_key(:error)
+      expect(formatted_responce[:error]).to eq("Customer not found with email input")
+    end
+
+    it "if subscription title passed does not pertain to a subscription, error is sent" do
+      customer = create(:customer)
+      subscription = create(:subscription)
+
+      customer_subscription_params = {
+        "customer_email": customer.email,
+        "subscription_title": "subscription.title"
+      }
+
+      headers = {"CONTENT_TYPE" => "application/json"}
+
+      patch "/api/v1/customer_subscriptions_cancel", headers: headers, params: JSON.generate(customer_subscription: customer_subscription_params)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+
+      formatted_responce = JSON.parse(response.body, symbolize_names: true)
+
+      expect(formatted_responce).to be_a(Hash)
+      expect(formatted_responce).to have_key(:error)
+      expect(formatted_responce[:error]).to eq("Subscription not found with title input")
     end
   end
 end
