@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :customer_subscriptions, only: [:create]
+      resources :customer_subscriptions, only: [:create, :index]
       patch "/customer_subscriptions_cancel", to: "customer_subscriptions#update"
     end
   end
