@@ -10,6 +10,12 @@ rescue_from NoMethodError, with: :not_found
     end
   end
 
+  def update
+    customer_id = find_customer_id(customer_subscription_params)
+    subscription_id = find_subscription_id(customer_subscription_params)
+    customer_subscription = CustomerSubscription.new(customer_id: customer_id, subscription_id: subscription_id)
+  end
+
   private
 
     def customer_subscription_params

@@ -74,4 +74,33 @@ RSpec.describe "CustomerSubscriptions API calls" do
       expect(formatted_responce[:error]).to eq("Subscription not found with title input")
     end
   end
+
+  describe "PATCH /api/v1/customer_subscriptions_cancel" do
+    it "passed valid customer email and subscription title, status is canceled" do
+      customer = create(:customer)
+      subscription = create(:subscription)
+
+      customer_subscription_params = {
+        "customer_email": customer.email,
+        "subscription_title": subscription.title
+      }
+
+      headers = {"CONTENT_TYPE" => "application/json"}
+
+      post "/api/v1/customer_subscriptions", headers: headers, params: JSON.generate(customer_subscription: customer_subscription_params)
+
+      patch "/api/v1/customer_subscriptions_cancel", headers: headers, params: JSON.genereate(customer_subscription: customer_subscription_params)
+
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
+
+      formatted_responce = JSON.parse(response.body, symbolize_names: true)
+
+      expect(formatted_responce).to be_a(Hash)
+      expect(formatted_responce).to have_key(:message)
+      expect(formatted_responce[:message]).to eq("Succesfully canceled customer subscription")
+
+      expect(customer.customer_subscriptions.first.status).to eq("cancelled")
+    end
+  end
 end
