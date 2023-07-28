@@ -90,3 +90,8 @@ All calls will provide customzized error messages if the client email or subscri
 
 [alejandro-li-url]: https://www.linkedin.com/in/alejandrolopez1992/
 [alejandro-gh-url]: https://github.com/AlejandroLopez1992
+[linkedin]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
+[github]: https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white
+
+
+
