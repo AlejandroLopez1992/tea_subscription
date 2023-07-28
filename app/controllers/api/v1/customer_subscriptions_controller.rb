@@ -1,6 +1,12 @@
 class Api::V1::CustomerSubscriptionsController < ApplicationController
 rescue_from NoMethodError, with: :not_found
 
+  def index
+    customer_id = find_customer_id(customer_subscription_params)
+    customer = Customer.find(customer_id)
+    render json: CustomerSubscriptionSerializer.new(customer.customer_subscriptions)
+  end
+
   def create
     customer_id = find_customer_id(customer_subscription_params)
     subscription_id = find_subscription_id(customer_subscription_params)

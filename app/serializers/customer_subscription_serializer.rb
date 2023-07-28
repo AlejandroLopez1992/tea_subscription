@@ -1,5 +1,6 @@
 class CustomerSubscriptionSerializer
   include JSONAPI::Serializer
+  attributes :status, :customer_id, :subscription_id, :subscription
 
   def created
     {
