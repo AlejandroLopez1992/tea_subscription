@@ -14,6 +14,7 @@ rescue_from NoMethodError, with: :not_found
     customer_id = find_customer_id(customer_subscription_params)
     subscription_id = find_subscription_id(customer_subscription_params)
     customer_subscription = CustomerSubscription.new(customer_id: customer_id, subscription_id: subscription_id)
+    customer_subscription.cancel
   end
 
   private

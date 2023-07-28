@@ -89,7 +89,7 @@ RSpec.describe "CustomerSubscriptions API calls" do
 
       post "/api/v1/customer_subscriptions", headers: headers, params: JSON.generate(customer_subscription: customer_subscription_params)
 
-      patch "/api/v1/customer_subscriptions_cancel", headers: headers, params: JSON.genereate(customer_subscription: customer_subscription_params)
+      patch "/api/v1/customer_subscriptions_cancel", headers: headers, params: JSON.generate(customer_subscription: customer_subscription_params)
 
       expect(response).to be_successful
       expect(response.status).to eq(200)
