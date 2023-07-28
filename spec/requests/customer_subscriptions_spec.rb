@@ -159,6 +159,7 @@ RSpec.describe "CustomerSubscriptions API calls" do
       customer_subscription_2 = CustomerSubscription.new(customer_id: customer.id, subscription_id: subscription.id)
       customer_subscription_2.save
       customer_subscription_1.cancel
+      customer_subscription_1.save
 
       customer_subscription_params = {
         "customer_email": customer.email
@@ -214,6 +215,33 @@ RSpec.describe "CustomerSubscriptions API calls" do
         expect(customer_subscription[:attributes][:subscription]).to have_key(:updated_at)
         expect(customer_subscription[:attributes][:subscription][:updated_at]).to be_a(String)
       end
+    end
+
+    it "if customer email passed does not pertain to a customer, error is sent" do
+      customer = create(:customer)
+      subscription = create(:subscription)
+      customer_subscription_1 = CustomerSubscription.new(customer_id: customer.id, subscription_id: subscription.id)
+      customer_subscription_1.save
+      customer_subscription_2 = CustomerSubscription.new(customer_id: customer.id, subscription_id: subscription.id)
+      customer_subscription_2.save
+      customer_subscription_1.cancel
+      customer_subscription_1.save
+
+      customer_subscription_params = {
+        "customer_email": "randomemail@email.com"
+      }
+
+      headers = {"CONTENT_TYPE" => "application/json"}
+
+      get '/api/v1/customer_subscriptions', headers: headers, params: {customer_subscription: customer_subscription_params}
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+
+      formatted_responce = JSON.parse(response.body, symbolize_names: true)
+
+      expect(formatted_responce).to be_a(Hash)
+      expect(formatted_responce).to have_key(:error)
+      expect(formatted_responce[:error]).to eq("Customer not found with email input")
     end
   end
 end
